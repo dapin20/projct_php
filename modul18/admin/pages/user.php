@@ -1,2 +1,2 @@
-<h3>Manajemen User</h3>
+<h3> Manajement User</h3>
 <p>Data user ditampilkan disini</p>

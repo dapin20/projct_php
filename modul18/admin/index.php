@@ -10,7 +10,7 @@ $allowed = ['dashboard', 'user', 'berita'];
 if (!in_array($page, $allowed)) {
     $page = 'dashboard';
 }
-$page = $_GET['page'] ?? 'dashboard';
+$page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 ?>
 
 <?php include 'templates/header.php'; ?>
