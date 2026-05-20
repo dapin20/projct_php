@@ -23,7 +23,7 @@ $e = $x;
 $e %= 3; // x = x % 3
 echo "x %= 3 > $e <br>";
 // Pangkat (PHP 5.6+)
-$f = $X;
+$f = $x;
 $f **= 2; // x = x ** 2
 echo "x **= 2 > $f <br>";
 // Penggabungan string

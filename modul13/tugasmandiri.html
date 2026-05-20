@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pendaftaran Ekstrakurikuler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a3c5e;
+      --accent: #c0392b;
+      --gold: #d4a017;
+      --light: #f4f1eb;
+      --white: #ffffff;
+      --border: #b0a898;
+      --shadow: 0 4px 24px rgba(26,60,94,0.13);
+    }
+ 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: linear-gradient(135deg, #1a3c5e 0%, #2d6a9f 60%, #d4a017 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 10px;
+    }
+ 
+    /* ===== LOGIN PAGE ===== */
+    #loginPage {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 50px 44px 40px;
+      width: 100%;
+      max-width: 420px;
+      animation: fadeIn 0.6s ease;
+    }
+ 
+    #loginPage h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--primary);
+      font-size: 1.7rem;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+ 
+    #loginPage .subtitle {
+      color: #7a8899;
+      font-size: 0.92rem;
+      margin-bottom: 30px;
+    }
+ 
+    .login-divider {
+      width: 48px;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+ 
+    .form-group {
+      margin-bottom: 20px;
+    }
+ 
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 7px;
+    }
+ 
+    .form-group input[type="text"],
+    .form-group input[type="password"] {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      background: #fdf9f3;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 1rem;
+      color: #222;
+      transition: border 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+ 
+    .form-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26,60,94,0.09);
+    }
+ 
+    .btn-login {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 7px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 6px;
+    }
+ 
+    .btn-login:hover { background: #14304d; }
+    .btn-login:active { transform: scale(0.98); }
+ 
+    .error-msg {
+      color: var(--accent);
+      font-size: 0.88rem;
+      margin-top: 12px;
+      display: none;
+    }
+ 
+    /* ===== REGISTRATION FORM ===== */
+    #regPage {
+      display: none;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 620px;
+      overflow: hidden;
+      animation: fadeIn 0.6s ease;
+    }
+ 
+    .reg-header {
+      background: var(--primary);
+      padding: 28px 36px 22px;
+      position: relative;
+    }
+ 
+    .reg-header::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+      margin-top: 10px;
+    }
+ 
+    .reg-header h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--white);
+      font-size: 1.55rem;
+      letter-spacing: 0.5px;
+    }
+ 
+    .reg-header p {
+      color: #a8c4de;
+      font-size: 0.88rem;
+      margin-top: 4px;
+    }
+ 
+    .reg-body {
+      padding: 32px 36px 24px;
+    }
+ 
+    .field-row {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      gap: 0;
+    }
+ 
+    .field-label {
+      width: 130px;
+      min-width: 130px;
+      font-size: 0.93rem;
+      font-weight: 600;
+      color: #3a4a5c;
+      padding-top: 10px;
+    }
+ 
+    .field-colon {
+      width: 18px;
+      min-width: 18px;
+      color: #888;
+      padding-top: 10px;
+      font-size: 0.95rem;
+    }
+ 
+    .field-input { flex: 1; }
+ 
+    .field-input input[type="text"],
+    .field-input input[type="date"],
+    .field-input textarea,
+    .field-input select {
+      width: 100%;
+      padding: 8px 11px;
+      border: 1.5px solid #c8c0b4;
+      border-radius: 6px;
+      background: #fdf9f3;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.95rem;
+      color: #222;
+      transition: border 0.2s;
+      outline: none;
+    }
+ 
+    .field-input input:focus,
+    .field-input textarea:focus,
+    .field-input select:focus {
+      border-color: var(--primary);
+    }
+ 
+    .field-input textarea {
+      resize: vertical;
+      min-height: 68px;
+    }
+ 
+    /* Date fields */
+    .date-fields {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+ 
+    .date-fields input { flex: 1; }
+    .date-sep { color: #aaa; font-size: 1rem; }
+ 
+    /* Radio */
+    .radio-group, .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-top: 8px;
+    }
+ 
+    .radio-group { flex-direction: row; gap: 22px; }
+ 
+    .radio-group label, .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      font-size: 0.93rem;
+      color: #3a4a5c;
+    }
+ 
+    input[type="radio"], input[type="checkbox"] {
+      accent-color: var(--primary);
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
+ 
+    /* Listbox */
+    .field-input select[multiple] {
+      height: 130px;
+    }
+ 
+    /* Required star */
+    .req { color: var(--accent); margin-left: 2px; }
+ 
+    .req-note {
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+ 
+    /* Buttons */
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1.5px solid #ede8e0;
+    }
+ 
+    .btn-submit {
+      padding: 10px 30px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 7px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+ 
+    .btn-submit:hover { background: #14304d; }
+ 
+    .btn-cancel {
+      padding: 10px 24px;
+      background: var(--white);
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+      border-radius: 7px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+ 
+    .btn-cancel:hover { background: #f0eee9; }
+ 
+    /* ===== RESULT PAGE ===== */
+    #resultPage {
+      display: none;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 560px;
+      overflow: hidden;
+      animation: fadeIn 0.6s ease;
+    }
+ 
+    .result-header {
+      background: var(--primary);
+      padding: 26px 36px 20px;
+    }
+ 
+    .result-header h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--white);
+      font-size: 1.4rem;
+    }
+ 
+    .result-header::after {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+      margin-top: 10px;
+    }
+ 
+    .result-body { padding: 28px 36px 24px; }
+ 
+    .result-row {
+      display: flex;
+      border-bottom: 1px solid #ede8e0;
+      padding: 10px 0;
+      font-size: 0.95rem;
+    }
+ 
+    .result-key {
+      width: 150px;
+      min-width: 150px;
+      font-weight: 600;
+      color: #3a4a5c;
+    }
+ 
+    .result-val { color: #222; flex: 1; }
+ 
+    .btn-back {
+      margin-top: 24px;
+      padding: 10px 26px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 7px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+ 
+    .btn-back:hover { background: #14304d; }
+ 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+ 
+    @media (max-width: 520px) {
+      #loginPage, .reg-body, .result-body { padding: 24px 16px; }
+      .reg-header, .result-header { padding: 20px 16px 14px; }
+      .field-label { width: 100px; min-width: 100px; }
+    }
+  </style>
+</head>
+<body>
+ 
+<!-- LOGIN PAGE -->
+<div id="loginPage">
+  <h1>Halaman Login</h1>
+  <p class="subtitle">Masuk untuk mengisi formulir pendaftaran</p>
+  <div class="login-divider"></div>
+ 
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" id="username" placeholder="Masukkan username" value="">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Masukkan password" value="">
+  </div>
+  <button class="btn-login" onclick="doLogin()">KIRIM</button>
+  <p class="error-msg" id="loginError">Username atau password salah. Gunakan: <b>aku / 1234567</b></p>
+  <p style="margin-top:18px;font-size:0.82rem;color:#aaa;">Demo: username <b>aku</b> | password <b>1234567</b></p>
+</div>
+ 
+<!-- REGISTRATION PAGE -->
+<div id="regPage">
+  <div class="reg-header">
+    <h2>Pendaftaran Ekstrakurikuler</h2>
+    <p>Isi data diri dengan lengkap dan benar</p>
+  </div>
+  <div class="reg-body">
+ 
+    <div class="field-row">
+      <div class="field-label">NIS <span class="req">*</span></div>
+      <div class="field-colon">:</div>
+      <div class="field-input">
+        <input type="text" id="nis" placeholder="Nomor Induk Siswa">
+      </div>
+    </div>
+ 
+    <div class="field-row">
+      <div class="field-label">Nama</div>
+      <div class="field-colon">:</div>
+      <div class="field-input">
+        <input type="text" id="nama" placeholder="Nama lengkap">
+      </div>
+    </div>
+ 
+    <div class="field-row">
+      <div class="field-label">Kelas</div>
+      <div class="field-colon">:</div>
+      <div class="field-input">
+        <select id="kelas">
+          <option value="X">X</option>
+          <option value="XI">XI</option>
+          <option value="XII">XII</option>
+        </select>
+      </div>
+    </div>
+ 
+    <div class="field-row">
+      <div class="field-label">Tgl Lahir</div>
+      <div class="field-colon">:</div>
+      <div class="field-input">
+        <div class="date-fields">
+          <input type="text" id="tgl" placeholder="DD" maxlength="2" style="max-width:60px">
+          <span class="date-sep">/</span>
+          <input type="text" id="bln" placeholder="MM" maxlength="2" style="max-width:60px">
+          <span class="date-sep">/</span>
+          <input type="text" id="thn" placeholder="YYYY" maxlength="4" style="max-width:80px">
+        </div>
+      </div>
+    </div>
+ 
+    <div class="field-row">
+      <div class="field-label">Alamat</div>
+      <div class="field-colon">:</div>
+      <div class="field-input">
+        <textarea id="alamat" placeholder="Alamat lengkap"></textarea>
+      </div>
+    </div>
+ 
+    <div class="field-row">
+      <div class="field-label">Kota</div>
+      <div class="field-colon">:</div>
+      <div class="field-input">
+        <input type="text" id="kota" placeholder="Kota">
+      </div>
+    </div>
+ 
+    <div class="field-row">
+      <div class="field-label">Jenis Kelamin</div>
+      <div class="field-colon">:</div>
+      <div class="field-input">
+        <div class="radio-group">
+          <label><input type="radio" name="kelamin" value="Laki-Laki"> Laki-Laki</label>
+          <label><input type="radio" name="kelamin" value="Perempuan"> Perempuan</label>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="field-row">
+      <div class="field-label">Hobby</div>
+      <div class="field-colon">:</div>
+      <div class="field-input">
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="hobby" value="Membaca"> Membaca</label>
+          <label><input type="checkbox" name="hobby" value="Olahraga"> Olahraga</label>
+          <label><input type="checkbox" name="hobby" value="Menyanyi"> Menyanyi</label>
+          <label><input type="checkbox" name="hobby" value="Menari"> Menari</label>
+          <label><input type="checkbox" name="hobby" value="Traveling"> Traveling</label>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="field-row">
+      <div class="field-label">Pilihan Ekskul</div>
+      <div class="field-colon">:</div>
+      <div class="field-input">
+        <select id="ekskul" multiple>
+          <option value="Pramuka">Pramuka</option>
+          <option value="Basket">Basket</option>
+          <option value="Volly">Volly</option>
+          <option value="Band">Band</option>
+          <option value="Seni Tari">Seni Tari</option>
+          <option value="Robotic">Robotic</option>
+          <option value="Bulu Tangkis">Bulu Tangkis</option>
+          <option value="Futsal">Futsal</option>
+          <option value="Paduan Suara">Paduan Suara</option>
+        </select>
+        <p style="font-size:0.78rem;color:#999;margin-top:4px;">Tahan Ctrl/Cmd untuk memilih lebih dari satu</p>
+      </div>
+    </div>
+ 
+    <p class="req-note">* Harus Di isi</p>
+ 
+    <div class="btn-row">
+      <button class="btn-submit" onclick="submitForm()">Kirim</button>
+      <button class="btn-cancel" onclick="cancelForm()">Cancel</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- RESULT PAGE -->
+<div id="resultPage">
+  <div class="result-header">
+    <h2>Hasil Pendaftaran Ekstrakurikuler</h2>
+  </div>
+  <div class="result-body" id="resultBody"></div>
+</div>
+ 
+<script>
+  function doLogin() {
+    const u = document.getElementById('username').value.trim();
+    const p = document.getElementById('password').value.trim();
+    const err = document.getElementById('loginError');
+    if (u === 'aku' && p === '1234567') {
+      err.style.display = 'none';
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('regPage').style.display = 'block';
+    } else {
+      err.style.display = 'block';
+    }
+  }
+ 
+  function submitForm() {
+    const nis = document.getElementById('nis').value.trim();
+    if (!nis) { alert('NIS wajib diisi!'); return; }
+ 
+    const nama = document.getElementById('nama').value.trim();
+    const kelas = document.getElementById('kelas').value;
+    const tgl = document.getElementById('tgl').value;
+    const bln = document.getElementById('bln').value;
+    const thn = document.getElementById('thn').value;
+    const tglLahir = [tgl, bln, thn].filter(Boolean).join('/') || '-';
+    const alamat = document.getElementById('alamat').value.trim() || '-';
+    const kota = document.getElementById('kota').value.trim() || '-';
+ 
+    const kelaminEl = document.querySelector('input[name="kelamin"]:checked');
+    const kelamin = kelaminEl ? kelaminEl.value : '-';
+ 
+    const hobbyEls = document.querySelectorAll('input[name="hobby"]:checked');
+    const hobby = hobbyEls.length ? Array.from(hobbyEls).map(h => h.value).join(', ') : '-';
+ 
+    const ekskulEl = document.getElementById('ekskul');
+    const ekskul = Array.from(ekskulEl.selectedOptions).map(o => o.value).join(', ') || '-';
+ 
+    const rows = [
+      ['NIS', nis],
+      ['Nama', nama || '-'],
+      ['Kelas', kelas],
+      ['Tgl Lahir', tglLahir],
+      ['Alamat', alamat],
+      ['Kota', kota],
+      ['Jenis Kelamin', kelamin],
+      ['Hobby', hobby],
+      ['Pilihan Ekskul', ekskul],
+    ];
+ 
+    let html = rows.map(([k, v]) => `
+      <div class="result-row">
+        <div class="result-key">${k}</div>
+        <div class="result-val">${v}</div>
+      </div>`).join('');
+ 
+    html += `<button class="btn-back" onclick="backToForm()">← Kembali ke Form</button>`;
+ 
+    document.getElementById('resultBody').innerHTML = html;
+    document.getElementById('regPage').style.display = 'none';
+    document.getElementById('resultPage').style.display = 'block';
+  }
+ 
+  function cancelForm() {
+    if (confirm('Yakin ingin membatalkan pengisian form?')) {
+      document.getElementById('regPage').style.display = 'none';
+      document.getElementById('loginPage').style.display = 'block';
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+    }
+  }
+ 
+  function backToForm() {
+    document.getElementById('resultPage').style.display = 'none';
+    document.getElementById('regPage').style.display = 'block';
+  }
+ 
+  // Enter key for login
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && document.getElementById('loginPage').style.display !== 'none') {
+      doLogin();
+    }
+  });
+</script>
+</body>
+</html>
